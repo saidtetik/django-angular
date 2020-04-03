@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  
+  django:
+    container_name: django
+    build: djangorest
+    command: bash -c "./wait-for-it.sh postgresql:5432 && python manage.py makemigrations && python manage.py migrate && python manage.py create_users && python manage.py runserver 0.0.0.0:80"
+    volumes:
+      - ./djangorest:/code
+    ports:
+      - "80:80"
+    depends_on:
+      - postgresql
+  postgresql:
+    container_name: postgresql
+    image: postgres
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+  ng:
+    container_name: nginx
+    build: travel-app
+    ports:
+        - "8080:80"
+    depends_on:
+      - django

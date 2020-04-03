@@ -1,0 +1,10 @@
+<h1>Travel Detail</h1>
+<div *ngFor="let travel of travel$ | async">
+  <p>
+    <b>Owner:</b> {{ travel.owner_username }}<br>
+    <b>Place:</b> {{ travel.place }}<br>
+    <b>Note:</b> {{ travel.note}}<br>
+    <b>Date:</b> {{ travel.date }}
+  </p>
+
+</div>
